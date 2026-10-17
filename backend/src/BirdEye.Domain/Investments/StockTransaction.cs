@@ -2,8 +2,9 @@ namespace BirdEye.Domain.Investments;
 
 public enum TransactionType { Buy, Sell }
 
-public class StockTransaction
+public class StockTransaction : IOwnedByUser
 {
+    public string UserId { get; set; } = "";
     public int Id { get; set; }
     public required string Symbol { get; set; }
     public TransactionType Type { get; set; }

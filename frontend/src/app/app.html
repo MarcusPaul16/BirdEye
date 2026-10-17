@@ -1,34 +1,70 @@
-<header>
-  <div class="brand">
-    <svg width="30" height="30" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
-      <path d="M2 16s5-9 14-9 14 9 14 9-5 9-14 9S2 16 2 16Z" />
-      <circle cx="16" cy="16" r="5.5" />
-      <circle cx="16" cy="16" r="1.8" fill="currentColor" />
-    </svg>
-    <span>Bird<em>Eye</em></span>
-  </div>
-  <div class="right">
-  <nav>
-    <a routerLink="/portfolio" routerLinkActive="active">Portfolio</a>
-    <a routerLink="/income" routerLinkActive="active">Income</a>
-    <a routerLink="/valuations" routerLinkActive="active">Valuations</a>
-    <a routerLink="/credits" routerLinkActive="active">Credits</a>
-    <a routerLink="/companies" routerLinkActive="active">Companies</a>
-  </nav>
-  <button type="button" class="theme" (click)="theme.toggle()"
-          [attr.aria-label]="theme.theme() === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'"
-          [title]="theme.theme() === 'dark' ? 'Light theme' : 'Dark theme'">
-    @if (theme.theme() === 'dark') {
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true">
-        <circle cx="12" cy="12" r="4.2" />
-        <path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M18.7 5.3l-1.6 1.6M6.9 17.1l-1.6 1.6" />
+<div class="shell" [class.bare]="!auth.email()">
+  @if (auth.email()) {
+  <aside class="side">
+    <a class="brand" routerLink="/portfolio" aria-label="BirdEye">
+      <svg width="28" height="28" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path d="M2 16s5-9 14-9 14 9 14 9-5 9-14 9S2 16 2 16Z" />
+        <circle cx="16" cy="16" r="5.5" />
+        <circle cx="16" cy="16" r="2" fill="currentColor" />
       </svg>
-    } @else {
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <path d="M20.5 14.3A8.5 8.5 0 0 1 9.7 3.5a8.5 8.5 0 1 0 10.8 10.8Z" />
-      </svg>
-    }
-  </button>
-  </div>
-</header>
-<main><router-outlet /></main>
+      <span>Bird<em>Eye</em></span>
+    </a>
+
+    <nav class="nav" aria-label="Main">
+      <a routerLink="/portfolio" routerLinkActive="active">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12A9 9 0 1 1 12 3v9z" /><path d="M15 3.5A9 9 0 0 1 20.5 9H15z" /></svg>
+        <span>Portfolio</span>
+      </a>
+      <a routerLink="/income" routerLinkActive="active">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h13v4" /><path d="M3 7v11a2 2 0 0 0 2 2h14a1 1 0 0 0 1-1v-9a1 1 0 0 0-1-1H5a2 2 0 0 1-2-2z" /><circle cx="16.5" cy="14.5" r="1.2" /></svg>
+        <span>Income</span>
+      </a>
+      <a routerLink="/expenses" routerLinkActive="active">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z" /><path d="M9.5 8h5M9.5 12h5" /></svg>
+        <span>Expenses</span>
+      </a>
+      <a routerLink="/calendar" routerLinkActive="active">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="3" /><path d="M3.5 10h17M8 3v4M16 3v4" /></svg>
+        <span>Calendar</span>
+      </a>
+      <a routerLink="/valuations" routerLinkActive="active">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 17a8 8 0 1 1 16 0" /><path d="M12 17l4-5" /><circle cx="12" cy="17" r="1" /></svg>
+        <span>Valuations</span>
+      </a>
+      <a routerLink="/credits" routerLinkActive="active">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="18" height="12" rx="3" /><path d="M3 10.5h18M7 15h3" /></svg>
+        <span>Credits</span>
+      </a>
+      <a routerLink="/companies" routerLinkActive="active">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20V6a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v14" /><path d="M14 10h4a1 1 0 0 1 1 1v9M3 20h18M8 9h3M8 12.5h3M8 16h3" /></svg>
+        <span>Companies</span>
+      </a>
+    </nav>
+
+    <app-motivate class="motivate" />
+
+    <button type="button" class="theme" (click)="theme.toggle()"
+            [attr.aria-label]="theme.theme() === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'"
+            [title]="theme.theme() === 'dark' ? 'Light theme' : 'Dark theme'">
+      @if (theme.theme() === 'dark') {
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="4.2" />
+          <path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M18.7 5.3l-1.6 1.6M6.9 17.1l-1.6 1.6" />
+        </svg>
+        <span class="t">Light mode</span>
+      } @else {
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M20.5 14.3A8.5 8.5 0 0 1 9.7 3.5a8.5 8.5 0 1 0 10.8 10.8Z" />
+        </svg>
+        <span class="t">Dark mode</span>
+      }
+    </button>
+    <a class="account" routerLink="/account" routerLinkActive="active" [title]="auth.email() ?? ''" aria-label="Account">
+      <span class="avatar" aria-hidden="true">{{ (auth.email() ?? '?')[0].toUpperCase() }}</span>
+      <span class="who">{{ auth.email() }}</span>
+    </a>
+  </aside>
+  }
+
+  <main><router-outlet /></main>
+</div>

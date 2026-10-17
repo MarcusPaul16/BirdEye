@@ -43,6 +43,9 @@ public record CompanyFundamentals(
     IReadOnlyList<AnnualValue> FreeCashFlowHistory,
     IReadOnlyList<AnnualValue> EpsHistory);
 
+/// <summary>The next dividend the data source knows about. The payment date is often missing until the company declares it.</summary>
+public record UpcomingDividend(DateOnly ExDate, DateOnly? PaymentDate);
+
 public record SymbolMatch(string Symbol, string Name, string? Exchange, string? Type);
 
 /// <summary>Abstraction over the external market-data vendor so the vendor can be swapped without touching the app.</summary>
@@ -52,6 +55,7 @@ public interface IMarketDataProvider
     Task<CompanyProfile> GetProfileAsync(string symbol, CancellationToken ct = default);
     Task<IReadOnlyList<DividendPayment>> GetDividendsAsync(string symbol, CancellationToken ct = default);
     Task<IReadOnlyList<PricePoint>> GetPriceHistoryAsync(string symbol, DateOnly from, DateOnly to, CancellationToken ct = default);
+    Task<UpcomingDividend?> GetUpcomingDividendAsync(string symbol, CancellationToken ct = default);
     Task<CompanyFundamentals> GetFundamentalsAsync(string symbol, CancellationToken ct = default);
     Task<IReadOnlyList<SymbolMatch>> SearchAsync(string query, CancellationToken ct = default);
 }

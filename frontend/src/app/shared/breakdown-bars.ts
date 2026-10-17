@@ -14,7 +14,7 @@ import { Slice } from '../core/api';
     li { display: grid; grid-template-columns: minmax(6rem, 11rem) 1fr 4.5rem; gap: .9rem; align-items: center; }
     .label { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: .85rem; }
     .track { height: 10px; border-radius: 5px; background: var(--line-soft); overflow: hidden; }
-    .fill { display: block; height: 100%; border-radius: 5px; background: var(--gold); min-width: 2px; }
+    .fill { display: block; height: 100%; border-radius: 5px; background: var(--accent); min-width: 2px; }
     .fill.none { background: var(--muted); opacity: .6; }
     .pct { text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; font-size: .85rem; }
   `,

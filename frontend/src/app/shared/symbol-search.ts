@@ -24,10 +24,10 @@ export interface SymbolMatch { symbol: string; name: string; exchange?: string; 
       display: grid; grid-template-columns: 6.5rem 1fr auto; gap: .75rem; align-items: center;
       padding: .55rem .65rem; border-radius: 8px; cursor: pointer; text-transform: none; letter-spacing: normal;
     }
-    li.active, li:hover { background: rgb(var(--gold-rgb) / .12); }
-    .sym { font-weight: 600; letter-spacing: .06em; color: var(--gold-bright); }
+    li.active, li:hover { background: rgb(var(--accent-rgb) / .12); }
+    .sym { font-weight: 600; color: var(--accent-strong); }
     .name { color: var(--text); font-size: .85rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .ex { color: var(--muted); font-size: .7rem; letter-spacing: .06em; text-transform: uppercase; }
+    .ex { color: var(--muted); font-size: .7rem; }
     .none { padding: .7rem; color: var(--muted); font-size: .85rem; text-transform: none; letter-spacing: normal; }
   `,
   template: `

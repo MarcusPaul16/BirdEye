@@ -102,7 +102,7 @@ public class IncomeController(BirdEyeDbContext db, IFxRateProvider fx, IMarketDa
     [HttpPut("{id:int}")]
     public async Task<IActionResult> Update(int id, IncomeRequest r, CancellationToken ct)
     {
-        var src = await db.IncomeSources.FindAsync([id], ct);
+        var src = await db.IncomeSources.FirstOrDefaultAsync(i => i.Id == id, ct);
         if (src is null) return NotFound();
         (src.PersonId, src.Name, src.Type, src.Amount, src.Currency, src.Frequency) =
             (r.PersonId, r.Name, r.Type, r.Amount, r.Currency, r.Frequency);

@@ -2,21 +2,23 @@ import { Component, input, model } from '@angular/core';
 
 export interface TabItem { id: string; label: string }
 
-/** Segmented control that stays pinned below the header, so long pages are navigated by topic instead of by scrolling. */
+/** Pill tabs pinned to the top while scrolling, so long pages are navigated by topic instead of by scrolling. */
 @Component({
   selector: 'app-tabs',
   styles: `
-    :host { position: sticky; top: 65px; z-index: 5; display: block; margin: 0 -2.5rem 2rem; padding: .75rem 2.5rem;
-      background: color-mix(in srgb, var(--bg) 82%, transparent); backdrop-filter: blur(14px); border-bottom: 1px solid var(--line-soft); }
-    .tabs { display: flex; gap: .25rem; overflow-x: auto; scrollbar-width: none; }
+    :host {
+      position: sticky; top: 0; z-index: 5; display: block; margin: 0 calc(-1 * var(--page-pad, 3rem)) 1.5rem; padding: .75rem var(--page-pad, 3rem);
+      background: color-mix(in srgb, var(--bg) 90%, transparent); backdrop-filter: blur(14px);
+    }
+    .tabs { display: flex; gap: .4rem; overflow-x: auto; scrollbar-width: none; }
     .tabs::-webkit-scrollbar { display: none; }
     button {
-      flex: none; background: transparent; color: var(--muted); border: 1px solid transparent; border-radius: 999px;
-      padding: .45rem 1.1rem; font-weight: 500; font-size: .85rem; letter-spacing: .02em;
+      flex: none; background: transparent; color: var(--muted); border-radius: 999px; padding: .55rem 1.15rem;
+      font-weight: 600; font-size: .9rem;
     }
-    button:hover { color: var(--text); filter: none; }
-    button.on { color: var(--gold-bright); border-color: rgb(var(--gold-rgb) / .35); background: rgb(var(--gold-rgb) / .1); }
-    @media (max-width: 720px) { :host { margin: 0 -1rem 1.5rem; padding: .6rem 1rem; } }
+    button:hover:not(:disabled) { color: var(--text); background: var(--surface); filter: none; }
+    button.on { color: var(--bg); background: var(--text); }
+    @media (max-width: 900px) { :host { top: 56px; } }
   `,
   template: `
     <div class="tabs" role="tablist">

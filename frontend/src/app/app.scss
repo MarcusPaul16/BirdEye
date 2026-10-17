@@ -1,42 +1,79 @@
 :host { display: block; }
 
-header {
-  position: sticky; top: 0; z-index: 10;
-  display: flex; align-items: center; justify-content: space-between; gap: 2rem; flex-wrap: wrap;
-  padding: 1rem 2.5rem;
-  background: color-mix(in srgb, var(--bg) 78%, transparent); backdrop-filter: blur(14px);
-  border-bottom: 1px solid var(--line);
+/* ---- Desktop: a fixed sidebar on the left, content on the right ---- */
+.shell { --side: 248px; --page-pad: 3rem; display: block; }
+
+.side {
+  position: fixed; inset: 0 auto 0 0; width: var(--side); z-index: 20;
+  display: flex; flex-direction: column; gap: 2rem; padding: 1.75rem 1rem 1.25rem;
+  background: var(--bg); border-right: 1px solid var(--line-soft);
 }
 
-.brand { display: flex; align-items: center; gap: .75rem; }
-.brand svg { color: var(--gold); }
-.brand span { font-family: var(--serif); font-size: 1.7rem; font-weight: 600; letter-spacing: .04em; }
-.brand em { font-style: normal; color: var(--gold); }
+.brand { display: flex; align-items: center; gap: .65rem; padding: 0 .75rem; color: var(--text); text-decoration: none; }
+.brand svg { color: var(--accent); flex: none; }
+.brand span { font-size: 1.35rem; font-weight: 800; letter-spacing: -.04em; }
+.brand em { font-style: normal; color: var(--accent); }
 
-nav { display: flex; gap: .25rem; }
-nav a {
-  padding: .5rem 1rem; border-radius: 999px; text-decoration: none; color: var(--muted);
-  font-size: .85rem; letter-spacing: .04em; transition: color .15s, background .15s;
+.nav { display: flex; flex-direction: column; gap: .25rem; }
+.nav a {
+  display: flex; align-items: center; gap: .85rem; padding: .75rem .9rem; border-radius: 14px;
+  color: var(--muted); text-decoration: none; font-size: .95rem; font-weight: 600; transition: background .15s, color .15s;
 }
-nav a:hover { color: var(--text); }
-nav a.active { color: var(--gold-bright); background: rgb(var(--gold-rgb) / .1); box-shadow: 0 0 0 1px rgb(var(--gold-rgb) / .3) inset; }
+.nav a svg { width: 22px; height: 22px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.nav a:hover { color: var(--text); background: var(--surface); }
+.nav a.active { color: var(--text); background: var(--surface); }
+.nav a.active svg { color: var(--accent); }
 
-main { max-width: 1180px; margin: 0 auto; padding: 3rem 2.5rem 5rem; }
+.motivate { margin-top: auto; padding: 0 .5rem; }
 
-@media (max-width: 720px) {
-  header { padding: 1rem; }
-  main { padding: 2rem 1rem 4rem; }
-  nav { overflow-x: auto; }
+.theme {
+  margin-top: .5rem; display: flex; align-items: center; gap: .75rem; width: 100%; justify-content: flex-start;
+  padding: .75rem .9rem; border-radius: 14px; background: transparent; color: var(--muted); font-weight: 500; font-size: .9rem;
+}
+.theme:hover:not(:disabled) { background: var(--surface); color: var(--text); filter: none; }
+
+main { margin-left: var(--side); max-width: calc(1180px + var(--side)); padding: 2.5rem var(--page-pad) 4rem; }
+
+/* ---- Phone and tablet: slim top bar, tab bar at the bottom ---- */
+@media (max-width: 900px) {
+  .shell { --side: 0px; --page-pad: 1rem; }
+
+  .side {
+    position: sticky; inset: auto; top: 0; width: auto; height: 56px; padding: 0 1rem; gap: 0; flex-direction: row; align-items: center;
+    justify-content: space-between; background: var(--bg); /* no backdrop-filter here: it would make the fixed tab bar below position itself against this bar */
+    border-right: 0; border-bottom: 1px solid var(--line-soft);
+  }
+  .brand { padding: 0; }
+  .motivate { margin: 0 .75rem 0 auto; padding: 0; }
+
+  .theme { margin: 0; width: 40px; height: 40px; padding: 0; justify-content: center; border-radius: 50%; background: var(--surface); }
+  .theme .t { display: none; }
+
+  .nav {
+    position: fixed; inset: auto 0 0 0; z-index: 30; flex-direction: row; justify-content: space-around; gap: 0;
+    padding: .35rem .25rem calc(.35rem + env(safe-area-inset-bottom)); background: color-mix(in srgb, var(--bg) 92%, transparent);
+    backdrop-filter: blur(16px); border-top: 1px solid var(--line-soft);
+  }
+  .nav a { flex: 1; min-width: 0; flex-direction: column; gap: .2rem; padding: .45rem 0; border-radius: 12px; font-size: .58rem; font-weight: 600; letter-spacing: -.01em; text-align: center; background: transparent !important; }
+  .nav a svg { width: 23px; height: 23px; }
+  .nav a span { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+  main { margin-left: 0; max-width: none; padding: 1.5rem var(--page-pad) 6.5rem; }
 }
 
-.right { display: flex; align-items: center; gap: .5rem; }
-button.theme {
-  display: inline-grid; place-items: center; width: 38px; height: 38px; padding: 0; border-radius: 50%;
-  background: transparent; color: var(--muted); border: 1px solid var(--line);
+/* ---- Account entry, and the bare layout of the sign-in page (no sidebar) ---- */
+.account {
+  display: flex; align-items: center; gap: .75rem; padding: .6rem .9rem; border-radius: 14px; color: var(--muted); text-decoration: none;
+  font-size: .85rem; font-weight: 500; min-width: 0;
 }
-button.theme:hover { color: var(--gold-bright); border-color: var(--gold); filter: none; }
+.account:hover, .account.active { background: var(--surface); color: var(--text); }
+.account .avatar { flex: none; display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: var(--hero-bg); color: #fff; font-weight: 700; font-size: .85rem; }
+.account .who { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
-@media (max-width: 720px) {
-  .right { width: 100%; justify-content: space-between; }
-  .right nav { min-width: 0; }
+.bare main { margin-left: 0; max-width: none; padding: 2rem 1rem; }
+
+@media (max-width: 900px) {
+  .account { padding: 0; margin-left: .5rem; }
+  .account .who { display: none; }
+  .account .avatar { width: 36px; height: 36px; }
 }

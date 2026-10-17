@@ -19,13 +19,13 @@ const PAD = { l: 52, r: 56, t: 16, b: 28 };
     svg { width: 100%; height: auto; display: block; touch-action: pan-y; }
     .grid { stroke: var(--line-soft); stroke-width: 1; }
     .axis-label { fill: var(--muted); font-size: 11px; font-family: var(--sans); }
-    .price { fill: none; stroke: var(--gold); stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+    .price { fill: none; stroke: var(--accent); stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
     .band { fill: none; stroke-width: 1.5; stroke-linejoin: round; }
     .cheap { stroke: var(--pos); } .fair { stroke: var(--text); } .rich { stroke: var(--neg); }
-    i.cheap { background: var(--pos); } i.fair { background: var(--text); } i.rich { background: var(--neg); } i.price { background: var(--gold); height: 3px; }
+    i.cheap { background: var(--pos); } i.fair { background: var(--text); } i.rich { background: var(--neg); } i.price { background: var(--accent); height: 3px; }
     .end-label { font-size: 11px; font-family: var(--sans); fill: var(--muted); }
     .cross { stroke: var(--muted); stroke-width: 1; }
-    .dot { fill: var(--gold); stroke: var(--surface); stroke-width: 2; }
+    .dot { fill: var(--accent); stroke: var(--surface); stroke-width: 2; }
     .tip {
       position: absolute; top: 8px; pointer-events: none; min-width: 170px;
       background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: .55rem .75rem;
@@ -74,7 +74,7 @@ const PAD = { l: 52, r: 56, t: 16, b: 28 };
         @if (hovered(); as h) {
           <div class="tip" [style.left]="tipLeft(v.xs[h])">
             <span class="d">{{ points()[h].date }}</span>
-            <div class="r"><span><i style="background: var(--gold)"></i>Price</span><b>{{ points()[h].price | money: currency() }}</b></div>
+            <div class="r"><span><i style="background: var(--accent)"></i>Price</span><b>{{ points()[h].price | money: currency() }}</b></div>
             <div class="r"><span><i style="background: var(--neg)"></i>Rich</span><b>{{ points()[h].rich | money: currency() }}</b></div>
             <div class="r"><span><i style="background: var(--text)"></i>Fair</span><b>{{ points()[h].fair | money: currency() }}</b></div>
             <div class="r"><span><i style="background: var(--pos)"></i>Cheap</span><b>{{ points()[h].cheap | money: currency() }}</b></div>

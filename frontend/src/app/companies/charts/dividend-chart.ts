@@ -26,14 +26,14 @@ const MAX_BAR = 24;
       padding: .3rem .8rem; border-radius: 999px; font-weight: 500; font-size: .8rem;
     }
     .ranges button:hover { color: var(--text); filter: none; }
-    .ranges button.on { color: var(--gold-bright); border-color: rgb(var(--gold-rgb) / .35); background: rgb(var(--gold-rgb) / .1); }
+    .ranges button.on { color: var(--accent-strong); border-color: rgb(var(--accent-rgb) / .35); background: rgb(var(--accent-rgb) / .1); }
     .plot { position: relative; }
     svg { width: 100%; height: auto; display: block; }
     .grid { stroke: var(--line-soft); stroke-width: 1; }
     .axis-label { fill: var(--muted); font-size: 11px; font-family: var(--sans); }
-    .bar { fill: var(--gold); }
+    .bar { fill: var(--accent); }
     .bar.dim { opacity: .55; }
-    .bar.on { fill: var(--gold-bright); opacity: 1; }
+    .bar.on { fill: var(--accent-strong); opacity: 1; }
     .hit { fill: transparent; }
     .value-label { fill: var(--text); font-size: 11px; font-weight: 600; font-family: var(--sans); }
     .tip {
@@ -44,7 +44,7 @@ const MAX_BAR = 24;
     .tip .v { display: block; font-weight: 600; font-size: 1rem; }
     .tip .d { display: block; color: var(--muted); font-size: .75rem; margin-top: .15rem; }
     details { margin-top: 1rem; color: var(--muted); }
-    summary { cursor: pointer; font-size: .75rem; letter-spacing: .12em; text-transform: uppercase; }
+    summary { cursor: pointer; font-size: .75rem; }
     .tbl { max-height: 220px; overflow: auto; margin-top: .5rem; }
     .note { color: var(--muted); font-size: .75rem; margin: .75rem 0 0; }
   `,

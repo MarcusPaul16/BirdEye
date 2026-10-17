@@ -17,17 +17,17 @@ const NARROW_BELOW = 560;
     .axis-label { fill: var(--muted); font-size: 11px; font-family: var(--sans); }
     .row-label { fill: var(--text); font-size: 12px; font-family: var(--sans); }
     .dim { opacity: .45; }
-    .range { fill: var(--gold); opacity: .3; }
-    .dot { fill: var(--gold-bright); stroke: var(--surface); stroke-width: 2; }
+    .range { fill: var(--accent); opacity: .3; }
+    .dot { fill: var(--accent-strong); stroke: var(--surface); stroke-width: 2; }
     .ref-dot { fill: var(--surface); stroke: var(--muted); stroke-width: 2; }
     .val { fill: var(--text); font-size: 11px; font-weight: 600; font-family: var(--sans); paint-order: stroke; stroke: var(--surface); stroke-width: 4px; stroke-linejoin: round; }
-    .sub-label { fill: var(--muted); font-size: 10px; font-family: var(--sans); letter-spacing: .04em; }
+    .sub-label { fill: var(--muted); font-size: 10px; font-family: var(--sans); }
     .price-line { stroke: var(--text); stroke-width: 1.5; }
     .price-label { fill: var(--text); font-size: 11px; font-weight: 600; font-family: var(--sans); }
     .legend { display: flex; gap: 1.25rem; flex-wrap: wrap; margin: 0 0 .75rem; color: var(--muted); font-size: .75rem; }
     .legend i { display: inline-block; vertical-align: middle; margin-right: .4rem; }
-    .legend .bar { width: 16px; height: 8px; border-radius: 4px; background: var(--gold); opacity: .4; }
-    .legend .pt { width: 9px; height: 9px; border-radius: 50%; background: var(--gold-bright); }
+    .legend .bar { width: 16px; height: 8px; border-radius: 4px; background: var(--accent); opacity: .4; }
+    .legend .pt { width: 9px; height: 9px; border-radius: 50%; background: var(--accent-strong); }
     .legend .ln { width: 2px; height: 12px; background: var(--text); }
   `,
   template: `

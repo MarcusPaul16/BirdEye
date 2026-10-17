@@ -4,8 +4,9 @@ public enum IncomeType { Salary, Freelance, Rental, Dividends, Other }
 
 public enum IncomeFrequency { OneTime, Monthly, Yearly }
 
-public class IncomeSource
+public class IncomeSource : IOwnedByUser
 {
+    public string UserId { get; set; } = "";
     public int Id { get; set; }
     public int PersonId { get; set; }
     public Person? Person { get; set; }

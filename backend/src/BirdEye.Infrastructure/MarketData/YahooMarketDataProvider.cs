@@ -113,6 +113,25 @@ public class YahooMarketDataProvider(HttpClient http, IMemoryCache cache) : IMar
         _ => (1m, currency),
     };
 
+    public async Task<UpcomingDividend?> GetUpcomingDividendAsync(string symbol, CancellationToken ct = default)
+    {
+        symbol = symbol.ToUpperInvariant();
+        return await cache.GetOrCreateAsync($"yahoo-upcoming:{symbol}", async e =>
+        {
+            e.AbsoluteExpirationRelativeToNow = TimeSpan.FromHours(1);
+            using var doc = await SummaryAsync(symbol, "calendarEvents,summaryDetail", ct);
+            var r = doc.RootElement.GetProperty("quoteSummary").GetProperty("result")[0];
+
+            DateOnly? Date(string module, string name) =>
+                r.TryGetProperty(module, out var m) && m.TryGetProperty(name, out var v) && v.TryGetProperty("raw", out var raw) && raw.ValueKind == JsonValueKind.Number
+                    ? DateOnly.FromDateTime(DateTimeOffset.FromUnixTimeSeconds(raw.GetInt64()).UtcDateTime) : null;
+
+            var ex = Date("calendarEvents", "exDividendDate") ?? Date("summaryDetail", "exDividendDate");
+            // "dividendDate" is the next payment date only when it is not before the ex-date; otherwise it is the previous payment.
+            return ex is null ? null : new UpcomingDividend(ex.Value, Date("calendarEvents", "dividendDate"));
+        });
+    }
+
     public async Task<CompanyFundamentals> GetFundamentalsAsync(string symbol, CancellationToken ct = default)
     {
         symbol = symbol.ToUpperInvariant();

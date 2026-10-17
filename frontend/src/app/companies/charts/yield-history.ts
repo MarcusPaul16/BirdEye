@@ -35,21 +35,21 @@ interface YieldPoint { t: number; date: string; y: number }
       padding: .3rem .8rem; border-radius: 999px; font-weight: 500; font-size: .8rem;
     }
     .ranges button:hover { color: var(--text); filter: none; }
-    .ranges button.on { color: var(--gold-bright); border-color: rgb(var(--gold-rgb) / .35); background: rgb(var(--gold-rgb) / .1); }
+    .ranges button.on { color: var(--accent-strong); border-color: rgb(var(--accent-rgb) / .35); background: rgb(var(--accent-rgb) / .1); }
     .legend { display: flex; gap: 1.25rem; margin: 0 0 .5rem; color: var(--muted); font-size: .75rem; }
     .legend i { display: inline-block; vertical-align: middle; margin-right: .4rem; width: 16px; height: 2px; }
-    .legend .yl { background: var(--gold); }
+    .legend .yl { background: var(--accent); }
     .legend .al { background: var(--text); }
     .plot { position: relative; }
     svg { width: 100%; height: auto; display: block; touch-action: pan-y; }
     .grid { stroke: var(--line-soft); stroke-width: 1; }
     .axis-label { fill: var(--muted); font-size: 11px; font-family: var(--sans); }
-    .line { fill: none; stroke: var(--gold); stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
-    .area { fill: var(--gold); opacity: .1; }
+    .line { fill: none; stroke: var(--accent); stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+    .area { fill: var(--accent); opacity: .1; }
     .avg { stroke: var(--text); stroke-width: 1.5; }
     .avg-label { fill: var(--text); font-size: 11px; font-weight: 600; font-family: var(--sans); }
     .cross { stroke: var(--muted); stroke-width: 1; }
-    .dot { fill: var(--gold); stroke: var(--surface); stroke-width: 2; }
+    .dot { fill: var(--accent); stroke: var(--surface); stroke-width: 2; }
     .tip {
       position: absolute; top: 8px; pointer-events: none; min-width: 150px;
       background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: .55rem .75rem;
@@ -57,10 +57,10 @@ interface YieldPoint { t: number; date: string; y: number }
     }
     .tip .v { display: block; font-weight: 600; font-size: 1rem; }
     .tip .d { display: block; color: var(--muted); font-size: .75rem; margin-top: .15rem; }
-    .tip .key { display: inline-block; width: 14px; height: 2px; background: var(--gold); margin-right: .45rem; vertical-align: middle; }
+    .tip .key { display: inline-block; width: 14px; height: 2px; background: var(--accent); margin-right: .45rem; vertical-align: middle; }
     .note { color: var(--muted); font-size: .75rem; margin: .75rem 0 0; line-height: 1.5; }
     details { margin-top: 1rem; color: var(--muted); }
-    summary { cursor: pointer; font-size: .75rem; letter-spacing: .12em; text-transform: uppercase; }
+    summary { cursor: pointer; font-size: .75rem; }
     .tbl { max-height: 220px; overflow: auto; margin-top: .5rem; }
   `,
   template: `

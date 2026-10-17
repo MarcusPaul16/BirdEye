@@ -20,7 +20,7 @@ import { Api, IncomeFrequency, IncomeSource, IncomeSummary, IncomeType, Person, 
     .section-head { display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin-bottom: 1rem; flex-wrap: wrap; }
     .section-head h3 { margin: 0; }
     .actions { display: flex; gap: .5rem; }
-    .actions button.ghost.on, .actions button.on { color: var(--gold-bright); border-color: var(--gold); }
+    .actions button.ghost.on, .actions button.on { color: var(--accent-strong); border-color: var(--accent); }
     .panel { padding: 1rem 0 1.5rem; margin-bottom: 1rem; border-bottom: 1px solid var(--line-soft); }
   `,
   template: `
@@ -51,7 +51,7 @@ import { Api, IncomeFrequency, IncomeSource, IncomeSummary, IncomeType, Person, 
         }
       </p>
 
-      @if (s.householdMonthly > 0) {
+        @if (s.householdMonthly > 0) {
         <div class="card">
           <div class="mix" role="img" [attr.aria-label]="'Income mix: ' + mixLabel()">
             @for (p of parts(); track p.label; let i = $index) {

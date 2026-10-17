@@ -21,11 +21,11 @@ interface Form { discountRate: number; terminalGrowth: number; growth: number; d
   imports: [MoneyPipe, DecimalPipe, FormsModule, SymbolSearch, Tabs, FootballField, YieldChannelChart],
   styles: `
     .verdict { font-family: var(--serif); }
-    .verdict.Undervalued { color: var(--pos); } .verdict.Overvalued { color: var(--neg); } .verdict.Fair { color: var(--gold-bright); }
+    .verdict.Undervalued { color: var(--pos); } .verdict.Overvalued { color: var(--neg); } .verdict.Fair { color: var(--accent-strong); }
     .assumptions { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 1rem; }
     .assumptions input { width: 100%; }
     .assumptions .hint { color: var(--muted); font-size: .7rem; letter-spacing: normal; text-transform: none; }
-    .assumptions .changed { border-color: var(--gold); }
+    .assumptions .changed { border-color: var(--accent); }
     .row-actions { display: flex; gap: .75rem; align-items: center; margin-top: 1rem; color: var(--muted); font-size: .8rem; }
     .model { border-bottom: 1px solid var(--line-soft); }
     .model:last-child { border-bottom: 0; }
@@ -35,11 +35,11 @@ interface Form { discountRate: number; terminalGrowth: number; growth: number; d
     }
     .model > summary::-webkit-details-marker { display: none; }
     .model > summary::before {
-      content: ''; width: .45rem; height: .45rem; border-right: 1.5px solid var(--gold); border-bottom: 1.5px solid var(--gold);
+      content: ''; width: .45rem; height: .45rem; border-right: 1.5px solid var(--accent); border-bottom: 1.5px solid var(--accent);
       transform: rotate(-45deg); transition: transform .15s;
     }
     .model[open] > summary::before { transform: rotate(45deg); }
-    .model > summary:hover { background: rgb(var(--gold-rgb) / .05); }
+    .model > summary:hover { background: rgb(var(--accent-rgb) / .05); }
     .model .name { font-weight: 600; }
     .model .fv { font-variant-numeric: tabular-nums; font-weight: 600; text-align: right; }
     .model .up { font-variant-numeric: tabular-nums; text-align: right; }
@@ -48,13 +48,13 @@ interface Form { discountRate: number; terminalGrowth: number; growth: number; d
     .model .detail table { width: auto; min-width: 320px; }
     .model .detail td, .model .detail th { padding: .3rem 1.5rem .3rem 0; border: 0; }
     .model .detail td:last-child { color: var(--text); font-variant-numeric: tabular-nums; }
-    .chip { font-size: .68rem; letter-spacing: .1em; text-transform: uppercase; padding: .15rem .6rem; border-radius: 999px; border: 1px solid var(--line); color: var(--muted); text-align: center; }
-    .chip.in { border-color: var(--gold-deep); color: var(--gold); }
-    .warn { color: var(--gold-bright); background: rgb(var(--gold-rgb) / .08); border: 1px solid rgb(var(--gold-rgb) / .3); border-radius: 10px; padding: .6rem 1rem; margin: 0 0 .6rem; }
+    .chip { font-size: .75rem; font-weight: 600; padding: .2rem .7rem; border-radius: 999px; background: var(--surface-2); color: var(--muted); text-align: center; justify-self: start; }
+    .chip.in { background: rgb(var(--accent-rgb) / .14); color: var(--accent-strong); }
+    .warn { color: var(--accent-strong); background: rgb(var(--accent-rgb) / .1); border-radius: var(--radius-sm); padding: .8rem 1rem; margin: 0 0 1rem; font-size: .9rem; }
     .sens td, .sens th { text-align: right; font-variant-numeric: tabular-nums; }
     .sens tbody th { text-transform: none; letter-spacing: normal; font-size: .85rem; font-weight: 600; color: var(--text); border-bottom: 1px solid var(--line-soft); padding: .9rem .75rem; }
     .sens thead th:first-child { text-align: left; }
-    .sens td.base { background: rgb(var(--gold-rgb) / .15); font-weight: 700; }
+    .sens td.base { background: rgb(var(--accent-rgb) / .15); font-weight: 700; }
     .sens td.above { color: var(--pos); }
     .disclaimer { color: var(--muted); font-size: .75rem; line-height: 1.6; max-width: 80ch; }
     .loading { color: var(--muted); }
@@ -62,12 +62,12 @@ interface Form { discountRate: number; terminalGrowth: number; growth: number; d
     .company-head h3 { font-size: 2.2rem; margin: 0; }
     .company-head .sector { color: var(--muted); }
     .scenarios { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: 1rem; }
-    .scenarios button { background: transparent; color: var(--muted); border: 1px solid var(--line); padding: .5rem 1.1rem; font-weight: 500; }
-    .scenarios button:hover { color: var(--text); border-color: var(--gold-deep); filter: none; }
-    .scenarios button.on { color: var(--gold-bright); border-color: var(--gold); background: rgb(var(--gold-rgb) / .1); }
+    .scenarios button { background: var(--surface-2); color: var(--muted); padding: .55rem 1.2rem; font-weight: 600; }
+    .scenarios button:hover { color: var(--text); filter: none; }
+    .scenarios button.on { color: var(--bg); background: var(--text); }
     .scenario-hint { color: var(--muted); font-size: .8rem; margin: 0 0 1.25rem; }
-    details.fine > summary { cursor: pointer; color: var(--muted); font-size: .8rem; letter-spacing: .1em; text-transform: uppercase; list-style: none; }
-    details.fine > summary::before { content: '+ '; color: var(--gold); }
+    details.fine > summary { cursor: pointer; color: var(--muted); font-size: .8rem; list-style: none; }
+    details.fine > summary::before { content: '+ '; color: var(--accent); }
     details.fine[open] > summary::before { content: '− '; }
     details.fine .assumptions { margin-top: 1rem; }
     @media (max-width: 720px) { .model > summary { grid-template-columns: 1.25rem 1fr 6rem; } .model .up, .model .chip { display: none; } }

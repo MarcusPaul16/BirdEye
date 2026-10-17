@@ -190,6 +190,67 @@ public class PortfolioController(BirdEyeDbContext db, IMarketDataProvider market
         });
     }
 
+    /// <summary>
+    /// Dividend calendar for the current holdings: what was paid (for the shares held at the time), what is owed, what the data source
+    /// has announced and, to fill the horizon, last year's payments rolled forward. Amounts are converted to RON at today's BNR rate and
+    /// reduced by the dividend tax rate, like the Income page.
+    /// </summary>
+    [HttpGet("dividend-calendar")]
+    public async Task<IActionResult> DividendCalendarAsync(int monthsBack, int monthsAhead, [FromServices] IConfiguration config, CancellationToken ct)
+    {
+        monthsBack = monthsBack is > 0 and <= 36 ? monthsBack : 6;
+        monthsAhead = monthsAhead is > 0 and <= 24 ? monthsAhead : 12;
+        var taxRate = config.GetValue("Taxes:DividendRate", 0.16m);
+        var today = DateOnly.FromDateTime(DateTime.Today);
+        var from = new DateOnly(today.Year, today.Month, 1).AddMonths(-monthsBack);
+        var to = new DateOnly(today.Year, today.Month, 1).AddMonths(monthsAhead + 1).AddDays(-1);
+
+        var txs = await db.StockTransactions.AsNoTracking().ToListAsync(ct);
+        var symbols = txs.Select(t => t.Symbol.ToUpperInvariant()).Distinct().ToList();
+        var events = new List<DividendEvent>();
+        var unavailable = new List<string>();
+
+        foreach (var symbol in symbols)
+        {
+            try
+            {
+                var dividends = await market.GetDividendsAsync(symbol, ct);
+                UpcomingDividend? upcoming = null;
+                try { upcoming = await market.GetUpcomingDividendAsync(symbol, ct); }
+                catch (Exception e) when (e is not OperationCanceledException) { /* the projection still works without announced dates */ }
+                events.AddRange(DividendCalendar.Build(symbol, txs, dividends, upcoming, today, from, to));
+            }
+            catch (Exception e) when (e is HttpRequestException or KeyNotFoundException or NotSupportedException)
+            {
+                unavailable.Add(symbol);
+            }
+        }
+
+        var rates = new Dictionary<string, decimal>();
+        foreach (var currency in events.Select(e => e.Currency).Distinct())
+            rates[currency] = await fx.ConvertAsync(1m, currency, "RON", ct);
+
+        var result = events.OrderBy(e => e.PaymentDate).ThenBy(e => e.Symbol).Select(e =>
+        {
+            var gross = e.AmountPerShare * e.Shares;
+            return new
+            {
+                e.Symbol, exDate = e.ExDate, paymentDate = e.PaymentDate, kind = e.Kind, e.PaymentDateIsEstimate,
+                shares = e.Shares, amountPerShare = e.AmountPerShare, currency = e.Currency,
+                gross, grossRon = gross * rates[e.Currency], netRon = gross * rates[e.Currency] * (1 - taxRate)
+            };
+        }).ToList();
+
+        var future = result.Where(e => e.paymentDate > today).ToList();
+        return Ok(new
+        {
+            currency = "RON", taxRate, from, to, today, unavailable,
+            events = result,
+            next = future.FirstOrDefault(),
+            next12MonthsNetRon = future.Where(e => e.paymentDate <= today.AddYears(1)).Sum(e => e.netRon),
+        });
+    }
+
     private static decimal DividendsReceived(IEnumerable<StockTransaction> txs, IEnumerable<DividendPayment> dividends)
     {
         var list = txs.OrderBy(t => t.Date).ToList();

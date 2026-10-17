@@ -16,6 +16,39 @@ cd frontend && npm install && npm start                         # app on http://
 
 In Development the API applies pending migrations on start.
 
+## Accounts and sign-in
+
+Every page and API call needs a signed-in account (email + password, at least 10 characters). Sessions use an HttpOnly, SameSite=Lax
+cookie (14 days, sliding); 5 wrong passwords lock the account for 5 minutes. All data (people, income, transactions, expenses) belongs
+to one account and is filtered by owner in the database layer, so one account can never read or change another's rows.
+
+**First account.** While no account exists, the API log prints `Setup code for creating the first one: XXXX-XXXX`. The "Create your
+account" page asks for it, because the first account also receives the data that predates accounts. After that, registration is closed;
+set `Auth__AllowRegistration=true` to let more people sign up (each gets their own, empty, data).
+
+**Forgot the password?** There is no email reset (no mail service). From the server: sign-in is by email, so delete the account and
+register again, handing the data back first:
+
+```bash
+docker exec birdeye-db psql -U birdeye -d birdeye -c '
+  UPDATE "People" SET "UserId"=''; UPDATE "IncomeSources" SET "UserId"='';
+  UPDATE "StockTransactions" SET "UserId"=''; UPDATE "Expenses" SET "UserId"='';
+  DELETE FROM "AspNetUsers";'
+# restart the API, read the new setup code from its log, create the account again: it receives everything back
+```
+
+Backups: `backend/backups/` (git-ignored) holds a `pg_dump` taken before the accounts migration.
+
+## Credits
+
+Add fixed-rate loans (annuity: equal monthly instalments) with amount, interest rate, start date and term. For each loan the page shows what is left to pay until the end (principal plus interest), the end date and the interest still ahead.
+
+- **Your payments.** Without any recorded payment the figures assume every instalment due so far was paid on time. Use *+ Add payment* to record what you really paid (an instalment, part of one, or an extra amount); from then on the balance follows your payments: interest is added every month on the instalment date, a missed month lets it pile up, and extra payments bring the end date forward. *Record the N instalments as paid* fills in the instalments due so far in one click. A payment made before an instalment date counts towards that instalment.
+- **Early repayment.** A lump sum or an extra amount every month, either shortening the term (same instalment) or reducing the instalment (same end date), with the interest saved after any early repayment fee. It starts from the real balance.
+- **Snowball vs avalanche.** Compares paying the smallest balance first with the highest rate first, with a fixed monthly budget, against paying only the minimums. Everything is converted to RON at today's BNR rate.
+
+Limits: fixed rate only; loan instalments are not added to Expenses automatically.
+
 ## Theme
 
 Light and dark, switched with the sun/moon button in the header. It follows the device setting until you choose one,
