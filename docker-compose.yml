@@ -1,0 +1,24 @@
+# Local development database. Data lives in the named volume, so it survives `docker compose down`
+# (use `docker compose down -v` to wipe it). The password is for local development only and the port
+# is bound to localhost, so it is not reachable from the network.
+services:
+  db:
+    image: postgres:17
+    container_name: birdeye-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: birdeye
+      POSTGRES_USER: birdeye
+      POSTGRES_PASSWORD: birdeye_dev
+    ports:
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - birdeye-pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U birdeye -d birdeye"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+
+volumes:
+  birdeye-pgdata:

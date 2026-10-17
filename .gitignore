@@ -1,0 +1,24 @@
+# Personal financial data and secrets: never commit these
+backend/backups/
+*.db
+*.db-*
+*.sqlite*
+*.dump
+.env
+.env.*
+
+# .NET
+bin/
+obj/
+.vs/
+*.user
+
+# Angular / Node
+node_modules/
+dist/
+.angular/
+frontend/.angular/
+
+# OS / editors
+.DS_Store
+.idea/

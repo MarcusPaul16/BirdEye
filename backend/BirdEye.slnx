@@ -1,0 +1,10 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/BirdEye.Api/BirdEye.Api.csproj" />
+    <Project Path="src/BirdEye.Domain/BirdEye.Domain.csproj" />
+    <Project Path="src/BirdEye.Infrastructure/BirdEye.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/BirdEye.Tests/BirdEye.Tests.csproj" />
+  </Folder>
+</Solution>

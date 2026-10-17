@@ -1,0 +1,42 @@
+:host { display: block; }
+
+header {
+  position: sticky; top: 0; z-index: 10;
+  display: flex; align-items: center; justify-content: space-between; gap: 2rem; flex-wrap: wrap;
+  padding: 1rem 2.5rem;
+  background: color-mix(in srgb, var(--bg) 78%, transparent); backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--line);
+}
+
+.brand { display: flex; align-items: center; gap: .75rem; }
+.brand svg { color: var(--gold); }
+.brand span { font-family: var(--serif); font-size: 1.7rem; font-weight: 600; letter-spacing: .04em; }
+.brand em { font-style: normal; color: var(--gold); }
+
+nav { display: flex; gap: .25rem; }
+nav a {
+  padding: .5rem 1rem; border-radius: 999px; text-decoration: none; color: var(--muted);
+  font-size: .85rem; letter-spacing: .04em; transition: color .15s, background .15s;
+}
+nav a:hover { color: var(--text); }
+nav a.active { color: var(--gold-bright); background: rgb(var(--gold-rgb) / .1); box-shadow: 0 0 0 1px rgb(var(--gold-rgb) / .3) inset; }
+
+main { max-width: 1180px; margin: 0 auto; padding: 3rem 2.5rem 5rem; }
+
+@media (max-width: 720px) {
+  header { padding: 1rem; }
+  main { padding: 2rem 1rem 4rem; }
+  nav { overflow-x: auto; }
+}
+
+.right { display: flex; align-items: center; gap: .5rem; }
+button.theme {
+  display: inline-grid; place-items: center; width: 38px; height: 38px; padding: 0; border-radius: 50%;
+  background: transparent; color: var(--muted); border: 1px solid var(--line);
+}
+button.theme:hover { color: var(--gold-bright); border-color: var(--gold); filter: none; }
+
+@media (max-width: 720px) {
+  .right { width: 100%; justify-content: space-between; }
+  .right nav { min-width: 0; }
+}
